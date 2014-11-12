@@ -1,64 +1,56 @@
 package com.zhanghui.saler.domain;
 
-import com.zhanghui.saler.common.SystemUserType;
-
-
 /**
- * 系统用户表
+ * 系统用户权限表
  */
 public class Role  extends RemarkId {
-    /** 账号*/
-    private String username;
-    /** 密码*/
-    private String passwd;
-    /** 系统用户类型,0:系统管理员,1:业务员, 2:代理商, 3：客户*/
-    private Byte sysUserType;
-    /** 状态,1:正常,0:异常*/
-    private Byte status;
-    /** 权限值列表,形如：1|2|3*/
-    private String privilege;
-
-    public SystemUserType getSystemUserType(){
-    	return SystemUserType.valueOf(sysUserType);
-    }
+    /** 用户ID*/
+    private String userId;
+    /** 数据录入权限 0无 1有 */
+    private Integer dataEntry;
+    /** 数据管理权限 0无 1有 */
+    private Integer dataManage;
+    /** 销售查询权限 0无 1有 */
+    private Integer saleQuery;
+    /** 用户管理权限 0无 1有 */
+    private Integer userManage;
+    /** imei查询权限 0无 1有 */
+    private Integer imeiQuery;
     
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPasswd() {
-        return passwd;
-    }
-
-    public void setPasswd(String passwd) {
-        this.passwd = passwd == null ? null : passwd.trim();
-    }
-
-    public Byte getSysUserType() {
-        return sysUserType;
-    }
-
-    public void setSysUserType(Byte sysUserType) {
-        this.sysUserType = sysUserType;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public String getPrivilege() {
-        return privilege;
-    }
-
-    public void setPrivilege(String privilege) {
-        this.privilege = privilege == null ? null : privilege.trim();
-    }
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Integer getDataEntry() {
+		return dataEntry;
+	}
+	public void setDataEntry(Integer dataEntry) {
+		this.dataEntry = dataEntry;
+	}
+	public Integer getDataManage() {
+		return dataManage;
+	}
+	public void setDataManage(Integer dataManage) {
+		this.dataManage = dataManage;
+	}
+	public Integer getSaleQuery() {
+		return saleQuery;
+	}
+	public void setSaleQuery(Integer saleQuery) {
+		this.saleQuery = saleQuery;
+	}
+	public Integer getUserManage() {
+		return userManage;
+	}
+	public void setUserManage(Integer userManage) {
+		this.userManage = userManage;
+	}
+	public Integer getImeiQuery() {
+		return imeiQuery;
+	}
+	public void setImeiQuery(Integer imeiQuery) {
+		this.imeiQuery = imeiQuery;
+	}
 }

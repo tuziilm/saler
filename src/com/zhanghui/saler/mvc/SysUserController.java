@@ -1,12 +1,13 @@
 package com.zhanghui.saler.mvc;
 
-import com.zhanghui.saler.common.LoginContext;
-import com.zhanghui.saler.common.RemarkForm;
-import com.zhanghui.saler.common.SecurityUtils;
-import com.zhanghui.saler.common.SystemUserType;
-import com.zhanghui.saler.common.Query.NameQuery;
-import com.zhanghui.saler.domain.SysUser;
-import com.zhanghui.saler.service.SysUserService;
+import java.security.NoSuchAlgorithmException;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -18,14 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import java.security.NoSuchAlgorithmException;
+import com.zhanghui.saler.common.LoginContext;
+import com.zhanghui.saler.common.Query.NameQuery;
+import com.zhanghui.saler.common.RemarkForm;
+import com.zhanghui.saler.common.SecurityUtils;
+import com.zhanghui.saler.domain.SysUser;
+import com.zhanghui.saler.service.SysUserService;
 
 /**
  * 系统用户操作入口
@@ -102,7 +101,6 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 				service.update(sysUser);
 			}else{
 				sysUser.setStatus((byte)1);
-				sysUser.setPrivilege("1");
 				service.save(sysUser);
 			}
 		}catch(DuplicateKeyException e){
@@ -129,28 +127,17 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 		@NotNull(message="用户名不能为空")
 		@Size(min=1,max=20,message="用户名长度应该在1-20个字符")
 		private String username;
+		@Size(min=6,message="密码长度不少于6个字符")
 		private String passwd;
-		private Byte sysUserType;
+		
 
         @Override
         public void populateObj(SysUser sysUser) {
             sysUser.setUsername(username);
-            SystemUserType sut = SystemUserType.valueOf(sysUserType);
-            if(LoginContext.isAdmin()&&sut!=SystemUserType.UNKNOWN){
-                sysUser.setSysUserType(sysUserType);
-            }
             if(passwd!=null&&passwd.length()>0){
                 sysUser.setPasswd(SecurityUtils.md5Encode(passwd, username));
             }
         }
-
-        public Byte getSysUserType() {
-			return sysUserType;
-		}
-		
-		public void setSysUserType(Byte sysUserType) {
-			this.sysUserType = sysUserType;
-		}
 
 		public String getUsername() {
 			return username;

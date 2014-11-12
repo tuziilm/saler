@@ -5,9 +5,12 @@
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="passwd" property="passwd" jdbcType="VARCHAR" />
-        <result column="sys_user_type" property="sysUserType" jdbcType="TINYINT" />
+        <result column="realname" property="realname" jdbcType="VARCHAR" />
+        <result column="phonenum" property="phonenum" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="position" property="position" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="TINYINT" />
-        <result column="privilege" property="privilege" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
@@ -26,15 +29,15 @@
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into sys_user (username, passwd, sys_user_type,
-        status, privilege, remark,
-        gmt_create, gmt_modified)
-        values (#{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{sysUserType,jdbcType=TINYINT},
-        #{status,jdbcType=TINYINT}, #{privilege,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, now(), now())
+        insert into sys_user (username, passwd, realname, phonenum, email, department, position,
+        status, remark, gmt_create, gmt_modified)
+        values (#{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
+        #{phonenum,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{department,jdbcType=VARCHAR},
+        #{position,jdbcType=VARCHAR},#{status,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, now(), now())
     </insert>
 
     <sql id="Base_Column_List" >
-        id, username, passwd, sys_user_type, status, privilege, remark, gmt_create, gmt_modified
+        id, username, passwd, realname, phonenum, email, department, position,status, remark, gmt_create, gmt_modified
     </sql>
 
     <select id="selectAll" resultMap="BaseResultMap" >
@@ -75,17 +78,26 @@
             <if test="passwd != null" >
                 passwd = #{passwd,jdbcType=VARCHAR},
             </if>
-            <if test="sysUserType != null" >
-                sys_user_type = #{sysUserType,jdbcType=TINYINT},
+            <if test="realname != null" >
+                realname = #{realname,jdbcType=VARCHAR},
             </if>
-            <if test="status != null" >
-                status = #{status,jdbcType=TINYINT},
+            <if test="phonenum != null" >
+                phonenum = #{phonenum,jdbcType=VARCHAR},
             </if>
-            <if test="privilege != null" >
-                privilege = #{privilege,jdbcType=VARCHAR},
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                position = #{position,jdbcType=VARCHAR},
             </if>
             <if test="remark != null" >
                 remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=TINYINT},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

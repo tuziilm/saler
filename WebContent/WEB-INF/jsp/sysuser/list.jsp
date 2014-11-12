@@ -23,8 +23,11 @@
 							<th></th>
 							<th>用户ID</th>
 							<th>用户名</th>
-							<th>类型</th>
-							<th>权限</th>
+							<th>真实姓名</th>
+							<th>电话</th>
+							<th>邮箱</th>
+							<th>部门</th>
+							<th>岗位</th>
 							<th>备注</th>
 						</tr>
 						<c:forEach var="data" items="${datas}">
@@ -32,8 +35,11 @@
 								<td class="checkbox_td"><input type="checkbox" name="ids" value="${data.id}"/></td>
 								<td>${data.id}</td>
 								<td>${fn:escapeXml(data.username)}</td>
-								<td>${data.systemUserType.name}</td>
-								<td>${data.privilege}</td>
+								<td>${fn:escapeXml(data.realname)}</td>
+								<td>${fn:escapeXml(data.phonenum)}</td>
+								<td>${fn:escapeXml(data.email)}</td>
+								<td>${fn:escapeXml(data.department)}</td>
+								<td>${fn:escapeXml(data.position)}</td>
 								<td>${fn:escapeXml(data.remark)}</td>
 							</tr>
 						</c:forEach>

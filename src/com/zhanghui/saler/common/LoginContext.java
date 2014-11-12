@@ -32,7 +32,7 @@ public final class LoginContext {
 	
 	public static boolean isAdmin(){
 		User user = userHolder.get();
-		return user==null?false:user.systemUserType==SystemUserType.ADMIN;
+		return user==null?false:true;
 	}
 	
 	public static String getUsername(){
@@ -63,16 +63,12 @@ public final class LoginContext {
 	}
 	
 	public static void doLogin(SysUser sysUser, HttpSession session){
-		if(sysUser.getId()==null || sysUser.getUsername()==null || sysUser.getSysUserType()==null || session==null)
+		if(sysUser.getId()==null || sysUser.getUsername()==null || session==null)
 			return;
 		User user = new User();
 		user.uid=sysUser.getId();
 		user.username=sysUser.getUsername();
-		user.systemUserType=SystemUserType.valueOf(sysUser.getSysUserType());
         user.uuid = session.getId();
-		if(user.systemUserType==SystemUserType.UNKNOWN)
-			return;
-		user.privilege=sysUser.getPrivilege();
 		session.setAttribute(USER_SESSION_KEY, user);
 		set(user);
 	}
@@ -80,8 +76,6 @@ public final class LoginContext {
 	public final static class User{
 		public Integer uid;
 		public String username;
-		public SystemUserType systemUserType;
-		public String privilege;
         public String uuid;
 	}
 	

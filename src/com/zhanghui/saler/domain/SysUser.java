@@ -1,8 +1,5 @@
 package com.zhanghui.saler.domain;
 
-import com.zhanghui.saler.common.SystemUserType;
-
-
 /**
  * 系统用户表
  * @author <a href="pangkunyi@gmail.com">Calvin Pang</a>
@@ -13,16 +10,19 @@ public class SysUser  extends RemarkId {
     private String username;
     /** 密码*/
     private String passwd;
-    /** 系统用户类型,0:系统管理员,1:业务员, 2:代理商, 3：客户*/
-    private Byte sysUserType;
+    /** 真实姓名*/
+    private String realname;
+    /** 电话号码*/
+    private String phonenum;
+    /** 邮箱*/
+    private String email;
+    /** 部门*/
+    private String department;
+    /** 职位*/
+    private String position;
     /** 状态,1:正常,0:异常*/
     private Byte status;
-    /** 权限值列表,形如：1|2|3*/
-    private String privilege;
-
-    public SystemUserType getSystemUserType(){
-    	return SystemUserType.valueOf(sysUserType);
-    }
+    private Integer privilege;
     
     public String getUsername() {
         return username;
@@ -40,27 +40,60 @@ public class SysUser  extends RemarkId {
         this.passwd = passwd == null ? null : passwd.trim();
     }
 
-    public Byte getSysUserType() {
-        return sysUserType;
-    }
+	public String getRealname() {
+		return realname;
+	}
 
-    public void setSysUserType(Byte sysUserType) {
-        this.sysUserType = sysUserType;
-    }
+	public void setRealname(String realname) {
+		this.realname = realname == null ? null : realname.trim();
+	}
 
-    public Byte getStatus() {
-        return status;
-    }
+	public String getPhonenum() {
+		return phonenum;
+	}
 
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
+	public void setPhonenum(String phonenum) {
+		this.phonenum = phonenum == null ? null : phonenum.trim();
+	}
 
-    public String getPrivilege() {
-        return privilege;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setPrivilege(String privilege) {
-        this.privilege = privilege == null ? null : privilege.trim();
-    }
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department == null ? null : department.trim();
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position == null ? null : position.trim();
+	}
+
+	public Byte getStatus() {
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
+
+	public Integer getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(Integer privilege) {
+		this.privilege = privilege;
+	}
+    
 }

@@ -1,12 +1,11 @@
 package com.zhanghui.saler.mvc.interceptor;
 
-import com.zhanghui.saler.common.LoginContext;
-import com.zhanghui.saler.common.SystemUserType;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.zhanghui.saler.common.LoginContext;
 
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
@@ -24,23 +23,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 			boolean isLogin=LoginContext.checkLogin(request.getSession());
 			if(!isLogin)
 				response.sendRedirect(contextPath+"/login");
-			else{
-				SystemUserType sut = LoginContext.get().systemUserType;
-				if(sut==SystemUserType.ADMIN){
-					return isLogin;
-				}else{
-					if(uri.equals("/")){
-						return true;
-					}
-					for(String res : sut.getResources()){
-						if(uri.startsWith(res)){
-							return isLogin;
-						}
-					}
-					response.sendRedirect(contextPath+"/login");
-					return false;
-				}
-			}
 			return isLogin;
 		}
 	}

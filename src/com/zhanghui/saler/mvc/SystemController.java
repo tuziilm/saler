@@ -1,12 +1,12 @@
 package com.zhanghui.saler.mvc;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.zhanghui.saler.common.LoginContext;
-import com.zhanghui.saler.common.RequestUtils;
-import com.zhanghui.saler.common.SecurityUtils;
-import com.zhanghui.saler.domain.SysUser;
-import com.zhanghui.saler.service.SysUserService;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.TimeUnit;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.zhanghui.saler.common.LoginContext;
+import com.zhanghui.saler.common.RequestUtils;
+import com.zhanghui.saler.common.SecurityUtils;
+import com.zhanghui.saler.domain.SysUser;
+import com.zhanghui.saler.service.SysUserService;
 
 /**
  * 登录、登出，系统设置等
- * @author <a href="pangkunyi@gmail.com">Calvin Pang</a>
- *
  */
 @Controller
 public class SystemController {
