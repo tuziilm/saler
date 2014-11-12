@@ -101,6 +101,7 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 				service.update(sysUser);
 			}else{
 				sysUser.setStatus((byte)1);
+				sysUser.setPrivilege(1);
 				service.save(sysUser);
 			}
 		}catch(DuplicateKeyException e){

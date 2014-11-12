@@ -1,4 +1,3 @@
-<%@page import="com.zhanghui.saler.common.SystemUserType"%>
 <%@page import="com.zhanghui.saler.common.LoginContext"%>
 <%@ include file="../../include/common.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -43,8 +42,8 @@
               ${saler:username()}，您好！ <a href="${basePath}logout" class="navbar-link">退出</a>
             </p>
             <ul class="nav">
-            <%SystemUserType sut=LoginContext.get().systemUserType;
-            if(sut==SystemUserType.ADMIN) {%>
+            <%
+            if(LoginContext.get().privilege==0) {%>
                 <%} %>
               <li class="${_activeSystem}"><a href="${basePath}sysuser/index">系统</a></li>
             </ul>

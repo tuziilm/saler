@@ -32,7 +32,7 @@ public final class LoginContext {
 	
 	public static boolean isAdmin(){
 		User user = userHolder.get();
-		return user==null?false:true;
+		return user==null?false:userHolder.get().privilege==0;
 	}
 	
 	public static String getUsername(){
@@ -69,6 +69,7 @@ public final class LoginContext {
 		user.uid=sysUser.getId();
 		user.username=sysUser.getUsername();
         user.uuid = session.getId();
+        user.privilege=sysUser.getPrivilege();
 		session.setAttribute(USER_SESSION_KEY, user);
 		set(user);
 	}
@@ -77,6 +78,7 @@ public final class LoginContext {
 		public Integer uid;
 		public String username;
         public String uuid;
+        public Integer privilege;
 	}
 	
 }

@@ -12,6 +12,7 @@
         <result column="position" property="position" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="TINYINT" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="privilege" property="privilege" jdbcType="TINYINT" />
         <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     </resultMap>
@@ -30,14 +31,14 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into sys_user (username, passwd, realname, phonenum, email, department, position,
-        status, remark, gmt_create, gmt_modified)
+        status, remark, privilege, gmt_create, gmt_modified)
         values (#{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
         #{phonenum,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{department,jdbcType=VARCHAR},
-        #{position,jdbcType=VARCHAR},#{status,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, now(), now())
+        #{position,jdbcType=VARCHAR},#{status,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, now(), now())
     </insert>
 
     <sql id="Base_Column_List" >
-        id, username, passwd, realname, phonenum, email, department, position,status, remark, gmt_create, gmt_modified
+        id, username, passwd, realname, phonenum, email, department, position,status, remark, privilege, gmt_create, gmt_modified
     </sql>
 
     <select id="selectAll" resultMap="BaseResultMap" >
@@ -98,6 +99,9 @@
             </if>
             <if test="status != null" >
                 status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="privilege != null" >
+                privilege = #{privilege,jdbcType=TINYINT},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
