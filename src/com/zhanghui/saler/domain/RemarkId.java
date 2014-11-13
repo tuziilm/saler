@@ -2,8 +2,6 @@ package com.zhanghui.saler.domain;
 
 /**
  * °üº¬remark×Ö¶Î
- * @author <a href="pangkunyi@gmail.com">Calvin Pang</a>
- *
  */
 public class RemarkId extends Id{
 	/** ±¸×¢*/

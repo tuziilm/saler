@@ -5,6 +5,9 @@
 		<input type="hidden" name="${item.name}" value="${item.value}"/>
 	</c:forEach>
 </form>
+<c:if test="${param.distribute !=null}">
+<input type="button" class="btn" onclick="javascript:doWithSingleItem('${param.distribute}')" name="_action_distribute" value="分配权限">
+</c:if>
 <c:if test="${param.create !=null}">
 <input onclick="javascript:location.href='${param.create}'" type="button" class="btn" name="_action_create" value="创建">
 </c:if>

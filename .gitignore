@@ -1,4 +1,8 @@
 .settings
-build
+.svn
 .classpath
 .project
+out
+build
+dist
+.idea/workspace.xml

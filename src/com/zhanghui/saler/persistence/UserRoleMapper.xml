@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhanghui.saler.persistence.UserRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.zhanghui.saler.domain.UserRole" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="data_entry" property="dataEntry" jdbcType="TINYINT" />
+        <result column="data_manage" property="dataManage" jdbcType="TINYINT" />
+        <result column="sale_query" property="saleQuery" jdbcType="TINYINT" />
+        <result column="user_manage" property="userManage" jdbcType="TINYINT" />
+        <result column="imei_query" property="imeiQuery" jdbcType="TINYINT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <delete id="deleteById">
+        delete from user_role where id=#{id}
+    </delete>
+    <delete id="deleteByIds">
+        delete from user_role where id in
+        <foreach collection="array" item="ids"  open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.zhanghui.saler.domain.UserRole" >
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_role (user_id, data_entry, data_manage, sale_query, user_manage, imei_query,
+        remark, gmt_create, gmt_modified)
+        values (#{userId,jdbcType=VARCHAR}, #{dataEntry,jdbcType=VARCHAR}, #{dataManage,jdbcType=VARCHAR},
+        #{saleQuery,jdbcType=VARCHAR},#{userManage,jdbcType=VARCHAR},#{imeiQuery,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}, now(), now())
+    </insert>
+
+    <sql id="Base_Column_List" >
+        id, user_id, data_entry, data_manage, sale_query, user_manage, imei_query, remark, gmt_create, gmt_modified
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from user_role
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from user_role where id=#{id}
+    </select>
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from user_role where user_id=#{userId}
+    </select>
+    <update id="updateByIdSelective" parameterType="com.zhanghui.saler.domain.UserRole" >
+        update user_role
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="dataEntry != null" >
+                data_entry = #{dataEntry,jdbcType=VARCHAR},
+            </if>
+            <if test="dataManage != null" >
+                data_manage = #{dataManage,jdbcType=VARCHAR},
+            </if>
+            <if test="saleQuery != null" >
+                sale_query = #{saleQuery,jdbcType=VARCHAR},
+            </if>
+            <if test="userManage != null" >
+                user_manage = #{userManage,jdbcType=VARCHAR},
+            </if>
+            <if test="imeiQuery != null" >
+                imei_query = #{imeiQuery,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

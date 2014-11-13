@@ -1,5 +1,6 @@
 package com.zhanghui.saler.mvc;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.annotation.Resource;
@@ -24,7 +25,9 @@ import com.zhanghui.saler.common.Query.NameQuery;
 import com.zhanghui.saler.common.RemarkForm;
 import com.zhanghui.saler.common.SecurityUtils;
 import com.zhanghui.saler.domain.SysUser;
+import com.zhanghui.saler.domain.UserRole;
 import com.zhanghui.saler.service.SysUserService;
+import com.zhanghui.saler.service.UserRoleService;
 
 /**
  * 系统用户操作入口
@@ -34,14 +37,17 @@ import com.zhanghui.saler.service.SysUserService;
 @Controller
 @RequestMapping("/sysuser")
 public class SysUserController extends CRUDController<SysUser, SysUserService, com.zhanghui.saler.mvc.SysUserController.SysUserForm, NameQuery>{
+	protected final String DISTRIBUTE_AREA;
 	public SysUserController() {
 		super("sysuser");
+		DISTRIBUTE_AREA=String.format("/%s/distribute", "sysuser");
 	}
 	@Resource
 	public void setSysUserService(SysUserService sysUserService){
 		this.service=sysUserService;
 	}
-	
+	@Resource
+	private UserRoleService userRoleService;
 	@RequestMapping("/index")
 	public String index(){
 		if(LoginContext.isAdmin()){
@@ -90,8 +96,8 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 				model.addAttribute("errors", errors);
 				return;
 			}
-		}else if(passwd.length()<4 || passwd.length()>20){
-			errors.addError(new ObjectError("passwd", "密码应为4~20个字符！"));
+		}else if(passwd.length()<6){
+			errors.addError(new ObjectError("passwd", "密码不能少于6个字符个字符！"));
 			model.addAttribute("errors", errors);
 			return;
 		}
@@ -101,7 +107,6 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 				service.update(sysUser);
 			}else{
 				sysUser.setStatus((byte)1);
-				sysUser.setPrivilege(1);
 				service.save(sysUser);
 			}
 		}catch(DuplicateKeyException e){
@@ -130,14 +135,24 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 		private String username;
 		@Size(min=6,message="密码长度不少于6个字符")
 		private String passwd;
-		
-
+		private String realname;
+		private String phonenum;
+		private String email;
+		private String department;
+		private String position;
+		private Integer privilege;
         @Override
         public void populateObj(SysUser sysUser) {
             sysUser.setUsername(username);
             if(passwd!=null&&passwd.length()>0){
                 sysUser.setPasswd(SecurityUtils.md5Encode(passwd, username));
             }
+            sysUser.setDepartment(department);
+            sysUser.setEmail(email);
+            sysUser.setPhonenum(phonenum);
+            sysUser.setPosition(position);
+            sysUser.setRealname(realname);
+            sysUser.setPrivilege(privilege);
         }
 
 		public String getUsername() {
@@ -155,10 +170,154 @@ public class SysUserController extends CRUDController<SysUser, SysUserService, c
 		public void setPasswd(String passwd) {
 			this.passwd = passwd==null?null:passwd.trim();
 		}
+		
+        public String getRealname() {
+			return realname;
+		}
 
-        @Override
+		public void setRealname(String realname) {
+			this.realname = realname;
+		}
+
+		public String getPhonenum() {
+			return phonenum;
+		}
+
+		public void setPhonenum(String phonenum) {
+			this.phonenum = phonenum;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getDepartment() {
+			return department;
+		}
+
+		public void setDepartment(String department) {
+			this.department = department;
+		}
+
+		public String getPosition() {
+			return position;
+		}
+
+		public void setPosition(String position) {
+			this.position = position;
+		}
+		
+		public Integer getPrivilege() {
+			return privilege;
+		}
+
+		public void setPrivilege(Integer privilege) {
+			this.privilege = privilege;
+		}
+
+		@Override
         public SysUser newObj() {
             return new SysUser();
         }
     }
+	@RequestMapping(value="/distribute/{id}")
+	public String distribute(@PathVariable("id") int id,Model model){
+			SysUser sysUser = service.get(id);
+			UserRole userRole = userRoleService.getByUserId(id);
+			model.addAttribute("privilege",LoginContext.get().privilege);
+			model.addAttribute("userId",id);
+			model.addAttribute("sysUser",sysUser);
+			model.addAttribute("userRole",userRole);
+			return DISTRIBUTE_AREA;
+		}
+	@RequestMapping(value="/distributeSave",method=RequestMethod.POST)
+	public String distributeSave(@Valid DistributeSaveForm form,BindingResult errors, Model model, HttpServletRequest request, HttpServletResponse response)throws UnsupportedEncodingException{
+		UserRole userRole=new UserRole();
+		if (!errors.hasErrors()) {
+			try{
+				userRole.setId(form.getId());
+				userRole.setUserId(form.getUserId());
+				userRole.setDataEntry(form.getDataEntry());
+				userRole.setDataManage(form.getDataManage());
+				userRole.setSaleQuery(form.getSaleQuery());
+				userRole.setImeiQuery(form.getImeiQuery());
+				userRole.setUserManage(form.getUserManage());
+				userRole.setRemark(form.getRemark());
+				userRoleService.saveOrUpdate(userRole);
+			}catch(DuplicateKeyException e){
+				errors.addError(new ObjectError("database", "代号已经存在！"));
+			} 
+		if (errors.hasErrors()) {
+			model.addAttribute("errors", errors);
+			return DISTRIBUTE_AREA;
+		}
+	}
+		return REDIRECT_LIST_PAGE;
+}
+	
+	public static class DistributeSaveForm {
+		
+		private Integer id;
+		private Integer userId;
+		private Integer dataEntry;
+		private Integer dataManage;
+		private Integer saleQuery;
+		private Integer userManage;
+		private Integer imeiQuery;
+		private String remark;
+		
+		public Integer getId() {
+			return id;
+		}
+		public void setId(Integer id) {
+			this.id = id;
+		}
+		public Integer getUserId() {
+			return userId;
+		}
+		public void setUserId(Integer userId) {
+			this.userId = userId;
+		}
+		public Integer getDataEntry() {
+			return dataEntry;
+		}
+		public void setDataEntry(Integer dataEntry) {
+			this.dataEntry = dataEntry;
+		}
+		public Integer getDataManage() {
+			return dataManage;
+		}
+		public void setDataManage(Integer dataManage) {
+			this.dataManage = dataManage;
+		}
+		public Integer getSaleQuery() {
+			return saleQuery;
+		}
+		public void setSaleQuery(Integer saleQuery) {
+			this.saleQuery = saleQuery;
+		}
+		public Integer getUserManage() {
+			return userManage;
+		}
+		public void setUserManage(Integer userManage) {
+			this.userManage = userManage;
+		}
+		public Integer getImeiQuery() {
+			return imeiQuery;
+		}
+		public void setImeiQuery(Integer imeiQuery) {
+			this.imeiQuery = imeiQuery;
+		}
+		public String getRemark() {
+			return remark;
+		}
+		public void setRemark(String remark) {
+			this.remark = remark;
+		}
+		
+	}
 }

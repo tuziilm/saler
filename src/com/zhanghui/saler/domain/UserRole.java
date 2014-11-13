@@ -3,9 +3,9 @@ package com.zhanghui.saler.domain;
 /**
  * 系统用户权限表
  */
-public class Role  extends RemarkId {
+public class UserRole  extends RemarkId {
     /** 用户ID*/
-    private String userId;
+    private Integer userId;
     /** 数据录入权限 0无 1有 */
     private Integer dataEntry;
     /** 数据管理权限 0无 1有 */
@@ -17,10 +17,10 @@ public class Role  extends RemarkId {
     /** imei查询权限 0无 1有 */
     private Integer imeiQuery;
     
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public Integer getDataEntry() {

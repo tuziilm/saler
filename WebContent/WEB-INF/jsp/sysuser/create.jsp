@@ -1,4 +1,5 @@
 <%@page import="org.springframework.validation.BindingResult"%>
+<%@page import="com.zhanghui.saler.common.LoginContext"%>
 <%@include file="../include/common.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <c:set var="_pageTitle" value="创建系统用户" scope="request"/>
@@ -32,22 +33,47 @@
 				    <input name="passwd" value="" type="password" class="input-large">
 				  </div>
 				</div>
-				<c:if test="${isUnderUserInfo!=true}">
+				<div class="control-group required-field">
+				  <label class="control-label">真实姓名:</label>
+				  <div class="controls">
+				    <input name="realname" value="" type="realname" class="input-large">
+				  </div>
+				</div>
+				<div class="control-group required-field">
+				  <label class="control-label">电话:</label>
+				  <div class="controls">
+				    <input name="phonenum" value="" type="phonenum" class="input-large">
+				  </div>
+				</div>
+				<div class="control-group required-field">
+				  <label class="control-label">邮箱:</label>
+				  <div class="controls">
+				    <input name="email" value="" type="email" class="input-large">
+				  </div>
+				</div>
+				<div class="control-group required-field">
+				  <label class="control-label">部门:</label>
+				  <div class="controls">
+				    <input name="department" value="" type="department" class="input-large">
+				  </div>
+				</div>
+				<div class="control-group required-field">
+				  <label class="control-label">岗位:</label>
+				  <div class="controls">
+				    <input name="position" value="" type="position" class="input-large">
+				  </div>
+				</div>
+				<%if(LoginContext.get().privilege==0) {%>
 					<div class="control-group required-field">
-					  <label class="control-label">类型:</label>
+					  <label class="control-label">用户类型:</label>
 					  <div class="controls">
-					  	<select id="sysUserType_sel" name="sysUserType" class="input-large">
+					  	<select id="privilege_sel" name="privilege" class="input-large">
+					  		<option value="1">普通用户</option>
 					  		<option value="0">系统管理员</option>
-					  		<option value="1">业务员</option>
-					  		<option value="2">代理商</option>
-					  		<option value="3">客户</option>
 					  	</select>
 					  </div>
 					</div>
-					<script type="text/javascript">
-						document.getElementById("sysUserType_sel").value='${saler:defVal(form.sysUserType,1)}';
-					</script>
-				</c:if>
+                <%} %>
 				<div class="control-group required-field">
 				  <label class="control-label">备注:</label>
 				  <div class="controls">

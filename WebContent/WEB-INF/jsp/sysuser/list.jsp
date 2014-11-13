@@ -50,6 +50,7 @@
 		<div class="row-fluid">
 			<div class="span4 toolbar">
 				<c:import url="../theme/${_theme}/toolbar.jsp">
+					<c:param name="distribute">${basePath}sysuser/distribute</c:param>
 					<c:param name="create">${basePath}sysuser/create</c:param>
 					<c:param name="delete">${basePath}sysuser/delete</c:param>
 					<c:param name="modify">${basePath}sysuser/modify</c:param>
