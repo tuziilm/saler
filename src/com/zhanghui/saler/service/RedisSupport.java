@@ -16,8 +16,6 @@ import javax.annotation.Resource;
 
 /**
  * Á¬½ÓRedis
- * @author <a href="pangkunyi@gmail.com">Calvin Pang</a>
- *
  */
 @Component
 public class RedisSupport {
