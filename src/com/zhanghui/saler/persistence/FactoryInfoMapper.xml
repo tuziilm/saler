@@ -9,7 +9,7 @@
         <result column="line" property="line" jdbcType="VARCHAR" />
         <result column="area" property="area" jdbcType="VARCHAR" />
         <result column="guarantee" property="guarantee" jdbcType="VARCHAR" />
-        <result column="operator" property="operator" jdbcType="INTEGER" />
+        <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
@@ -31,7 +31,7 @@
         insert into factory_info (imei, day, module, line, area, guarantee, operator,
         remark, gmt_create, gmt_modified)
         values (#{imei,jdbcType=VARCHAR}, #{day,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR},
-        #{line,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{guarantee,jdbcType=VARCHAR},,#{operator,jdbcType=INTEGER},
+        #{line,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{guarantee,jdbcType=VARCHAR},,#{operator,jdbcType=VARCHAR},
         #{remark,jdbcType=VARCHAR}, now(), now())
     </insert>
 
@@ -49,6 +49,17 @@
         select
         <include refid="Base_Column_List" />
         from factory_info where id=#{id}
+    </select>
+    <select id="select" resultMap="BaseResultMap" parameterType="com.zhanghui.saler.common.Paginator" >
+        select
+        <include refid="Base_Column_List" />
+        from factory_info
+        <where>
+            <if test="query.name != null">
+                imei like #{query.name}
+            </if>
+        </where>
+        order by id desc limit #{start},#{sqlSize}
     </select>
     <update id="updateByIdSelective" parameterType="com.zhanghui.saler.domain.UserRole" >
         update factory_info

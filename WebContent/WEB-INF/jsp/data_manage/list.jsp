@@ -50,11 +50,11 @@
 			</table>
 		</div>
 		<div class="row-fluid">
-			<form action="${basePath}data/entry" method="post" class="form-horizontal" enctype="multipart/form-data">
+			<form action="${basePath}data_manage/entry" method="post" class="form-horizontal" enctype="multipart/form-data">
 				<div class="control-group required-field">
 				  <label class="control-label">excel文件:</label>
 				  <div class="controls">
-				    <input type="file" name="adPic" class="input-large">
+				    <input type="file" name="excel" class="input-large">
 				  </div>
 				</div>
 				<div class="form-actions">

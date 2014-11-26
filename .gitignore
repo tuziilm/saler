@@ -2,11 +2,9 @@
 .svn
 .classpath
 .project
-
 out
 build
 dist
 .idea/workspace.xml
-
 src/config.properties
 

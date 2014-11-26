@@ -45,6 +45,7 @@
             <%
             if(LoginContext.get().privilege==0) {%>
                 <%} %>
+              <li class="${_activeDataManage}"><a href="${basePath}data_manage/list">数据管理</a></li>
               <li class="${_activeSystem}"><a href="${basePath}sysuser/index">系统</a></li>
             </ul>
           </div><!--/.nav-collapse -->

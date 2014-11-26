@@ -8,7 +8,7 @@ public class FactoryInfo extends RemarkId{
 	private String line;
 	private String area;
 	private String guarantee;
-	private Integer operator;
+	private String operator;
 	public String getImei() {
 		return imei;
 	}
@@ -45,10 +45,10 @@ public class FactoryInfo extends RemarkId{
 	public void setGuarantee(String guarantee) {
 		this.guarantee = guarantee;
 	}
-	public Integer getOperator() {
+	public String getOperator() {
 		return operator;
 	}
-	public void setOperator(Integer operator) {
+	public void setOperator(String operator) {
 		this.operator = operator;
 	}
 	
