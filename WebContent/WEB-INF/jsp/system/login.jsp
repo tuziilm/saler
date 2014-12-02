@@ -63,11 +63,19 @@
         <input name="username" type="text" class="input-block-level" placeholder="用户名">
         <label for="passwd">密码:</label>
         <input name="passwd" type="password" class="input-block-level" placeholder="密码">
-        <button class="btn btn-large btn-primary" type="submit">登录</button>
+        <button class="btn btn-large btn-primary" type="submit" id="login">登录</button>
       </form>
 
     </div> <!-- /container -->
     <script type="text/javascript" src="${basePath}static/jquery/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="${basePath}static/theme/${_theme}/global.js"></script>
+	<script type="text/javascript"> 
+		document.onkeydown=function(event){ 
+			e = event ? event :(window.event ? window.event : null); 
+			if(e.keyCode==13){ 
+				return checkLogin();
+			} 
+		} 
+	</script> 
   </body>
 </html>

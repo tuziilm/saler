@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hslf.model.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -65,7 +66,7 @@ public class DataEntryController extends ListController<FactoryInfo, FactoryInfo
 		//用于存放excel解析的数据对象
 		List<FactoryInfo> list = readExcel(form);
 		for(FactoryInfo f :list){
-			System.out.println(f.getImei());
+			System.out.println(f.getImei()+"::::::"+f.getDay()+"::::::"+f.getOperator()+"::::::"+f.getArea()+"::::::"+f.getGuarantee()+"::::::"+f.getRemark()+"::::::"+f.getLine());
 		}
 //		return list(query, errors, model, request);
 		return null;
@@ -80,7 +81,7 @@ public class DataEntryController extends ListController<FactoryInfo, FactoryInfo
 				// 得到第一页  
 				XSSFSheet sheet = book.getSheetAt(0);  
 				// 得到第一面的所有行  
-				Iterator<Row> allRows = sheet.rowIterator();  
+				Iterator<Row> allRows = sheet.rowIterator(); 
 				// 标题解析 
 				// 得到第一行，也就是标题行  
 				Row title = allRows.next();  

@@ -55,10 +55,8 @@
 				  <label class="control-label">excel文件:</label>
 				  <div class="controls">
 				    <input type="file" name="excel" class="input-large">
+					  <input class="btn btn-primary" type="submit" value="导入">
 				  </div>
-				</div>
-				<div class="form-actions">
-				  <input class="btn btn-primary" type="submit" value="导入">
 				</div>
 			</form>
 			<div class="span8 paginator">
